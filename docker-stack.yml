@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  dportforward:
+   image: cmdtest
+   ports:
+    - "22:22"
+    - "2000:2000"
+    - "2100:2100"
+    - "2200:2200"
+    - "2300:2300"
+    - "2400:2400"
+    - "2500:2500"
+   deploy:
+    mode: global
+    placement:
+     constraints: [node.role == manager]
+   secrets:
+    - ssh_password    
+secrets:
+    ssh_password:
+      external: true
