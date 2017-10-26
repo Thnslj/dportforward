@@ -3,9 +3,6 @@ FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 
-# read ssh_password from secret and write it to chpasswd
-#RUN echo 'root:'`cat '/run/secrets/ssh_password'` | chpasswd
-
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
@@ -15,6 +12,5 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
-#CMD ["/usr/sbin/sshd", "-D"]
+
 CMD ["/bin/bash","-c","echo 'root:'`cat '/run/secrets/ssh_password'` | chpasswd && date && '/usr/sbin/sshd' -D"]
-#CMD ["/bin/bash","-c","echo 'root:$12345' | chpasswd && date && '/usr/sbin/sshd' -D"]
