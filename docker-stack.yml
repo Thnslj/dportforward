@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   dportforward:
-   image: dportforward
+   image: thinus/dportforward
    ports:
     - "22:22"
     - "2000:2000"
@@ -12,8 +12,6 @@ services:
     - "2500:2500"
    deploy:
     mode: global
-    placement:
-     constraints: [node.role == manager]
    secrets:
     - ssh_password    
 secrets:
